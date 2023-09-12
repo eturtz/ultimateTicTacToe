@@ -10,9 +10,13 @@ current_player = "X"
 # Create buttons for the Tic Tac Toe grid (defined globally)
 buttons = []
 
+winner =" "
+
+
 # Function to handle a button click
 def handle_click(button_index):
     global current_player
+    global board
 
     # Check if the button has already been clicked
     if board[button_index] == " ":
@@ -31,6 +35,7 @@ def handle_click(button_index):
             # Switch to the other player
             current_player = "O" if current_player == "X" else "X"
 
+
 # Function to check for a win
 def check_win(player):
     # Check rows, columns, and diagonals
@@ -43,6 +48,7 @@ def check_win(player):
             return True
     return False
 
+
 # Function to reset the game
 def reset_game():
     global board, current_player
@@ -51,19 +57,21 @@ def reset_game():
     for button in buttons:
         button.config(text=" ", state=tk.NORMAL)
 
+
 # Function to start the game
-def start_game():
+def start_game(board):
     # Create the main window
     root = tk.Tk()
     root.title("Tic Tac Toe")
 
     # Create buttons for the Tic Tac Toe grid
-    buttons = []
-    for i in range(9):
-        button = tk.Button(root, text=" ", font=("Helvetica", 24), width=5, height=2, command=lambda i=i: handle_click(i))
+    global buttons
+    for i in board:
+        button = tk.Button(root, text=" ", font=("Helvetica", 24), width=5, height=2,
+                           command=lambda i=i: handle_click(i))
         buttons.append(button)
-        row = i // 3
-        col = i % 3
+        row = board[i] // 3
+        col = board[i] % 3
         button.grid(row=row, column=col)
 
     # Create a reset button
@@ -73,4 +81,3 @@ def start_game():
     root.mainloop()
 
 # Main function to start the game
-
